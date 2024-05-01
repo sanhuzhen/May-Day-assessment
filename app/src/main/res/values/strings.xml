@@ -3,4 +3,8 @@
     <string name="task">任务</string>
     <string name="focus">专注</string>
     <string name="mine">我的</string>
+    <string name="name">昵称</string>
+    <string name="we">关于我们</string>
+    <string name="feedback">意见反馈</string>
+    <string name="commit">提交</string>
 </resources>
