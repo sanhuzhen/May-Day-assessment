@@ -10,7 +10,7 @@
         android:id="@+id/nav_view"
         app:menu="@menu/nav_bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         app:itemRippleColor="@null"
         app:itemBackground="@null"
         app:itemIconTint="@drawable/select_menu_color"
