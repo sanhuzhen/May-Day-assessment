@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_task"
+        android:icon="@drawable/baseline_bookmarks_24"
+        android:title="@string/task" />
+    <item
+        android:id="@+id/nav_focus"
+        android:icon="@drawable/baseline_access_time_24"
+        android:title="@string/focus" />
+    <item
+        android:id="@+id/nav_mine"
+        android:icon="@drawable/baseline_person_24"
+        android:title="@string/mine" />
+</menu>
