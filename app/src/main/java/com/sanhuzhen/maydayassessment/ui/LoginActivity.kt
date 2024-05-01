@@ -4,10 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
-import com.sanhuzhen.maydayassessment.MainActivity
-import com.sanhuzhen.maydayassessment.R
 import com.sanhuzhen.maydayassessment.base.BaseActivity
 import com.sanhuzhen.maydayassessment.databinding.ActivityLoginBinding
 import com.sanhuzhen.maydayassessment.utils.toast
@@ -41,7 +37,7 @@ class LoginActivity: BaseActivity() {
                 val password = binding.etLoginPassword.text.toString()
                 if (mSharedPreferences.getString("account","").equals(account)&&
                     mSharedPreferences.getString("password","").equals(password)){
-                    startActivity(Intent(this,MainActivity::class.java))
+                    startActivity(Intent(this, MainActivity::class.java))
                 }else{
                     toast(this,"用户名或密码错误")
                 }

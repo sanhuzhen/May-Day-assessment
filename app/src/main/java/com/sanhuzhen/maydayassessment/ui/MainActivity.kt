@@ -1,13 +1,11 @@
-package com.sanhuzhen.maydayassessment
+package com.sanhuzhen.maydayassessment.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.sanhuzhen.maydayassessment.R
 import com.sanhuzhen.maydayassessment.adapter.ViewPageAdapter
 import com.sanhuzhen.maydayassessment.base.BaseActivity
 import com.sanhuzhen.maydayassessment.databinding.ActivityMainBinding
-import com.sanhuzhen.maydayassessment.ui.FocusFragment
-import com.sanhuzhen.maydayassessment.ui.TaskFragment
-import com.sanhuzhen.maydayassessment.ui.MineFragment
 
 /**
  * @author: sanhuzhen
