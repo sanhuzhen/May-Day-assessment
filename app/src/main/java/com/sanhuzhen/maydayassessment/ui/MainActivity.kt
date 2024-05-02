@@ -43,7 +43,7 @@ class MainActivity : BaseActivity() {
     }
     private fun aadFragment() {
         fragmentList.apply {
-            add(TaskFragment())
+            add(AssignmentFragment())
             add(FocusFragment())
             add(MineFragment())
         }

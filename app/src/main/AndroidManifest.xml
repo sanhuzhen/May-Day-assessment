@@ -35,6 +35,9 @@
         <activity android:name=".ui.FeedBackActivity">
 
         </activity>
+        <activity android:name=".ui.AddTaskActivity">
+
+        </activity>
     </application>
 
 </manifest>

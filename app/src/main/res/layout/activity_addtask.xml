@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img"
+    android:orientation="vertical">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/green"
+        tools:ignore="UselessLeaf">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_back"
+        android:layout_width="46dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/baseline_arrow_back_24" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="50dp"
+        android:gravity="center"
+        android:text="添加任务"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        tools:ignore="RtlHardcoded" />
+    </FrameLayout>
+
+
+    <EditText
+        android:id="@+id/et_textName"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="任务名称:"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:background="@drawable/edit_type"/>
+    <FrameLayout
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_type"
+            android:layout_marginTop="20dp"
+            android:text="任务截至时间:"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/tv_textTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="请选择"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:layout_marginStart="20sp"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_add"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/bt_type"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="完成"
+        android:textSize="20sp"/>
+
+
+
+</LinearLayout>

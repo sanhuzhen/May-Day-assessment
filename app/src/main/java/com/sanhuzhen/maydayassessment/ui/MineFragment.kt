@@ -18,6 +18,12 @@ import androidx.fragment.app.Fragment
 import com.sanhuzhen.maydayassessment.databinding.FragmentMineBinding
 import com.sanhuzhen.maydayassessment.utils.toast
 
+/**
+ * @author: sanhuzhen
+ * @date: 2024/05/01 17:07
+ * @description: 个人中心
+ */
+
 @Suppress("NAME_SHADOWING")
 class MineFragment: Fragment() {
     private lateinit var mSharedPreferences: SharedPreferences
