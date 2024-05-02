@@ -22,7 +22,7 @@
             android:padding="2dp"/>
     </FrameLayout>
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt_add"
+        android:id="@+id/bt_assignment_add"
         android:layout_marginTop="25dp"
         android:layout_width="350dp"
         android:layout_height="50dp"
