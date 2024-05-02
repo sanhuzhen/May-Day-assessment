@@ -16,7 +16,6 @@ class MyDatabaseHelper(private val context: Context, name: String, version: Int)
 
         override fun onCreate(db: SQLiteDatabase) {
             db.execSQL(createTask)
-            toast(this.context,"添加成功")
         }
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         }

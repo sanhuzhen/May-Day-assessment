@@ -4,8 +4,6 @@ import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import com.sanhuzhen.maydayassessment.R
 import com.sanhuzhen.maydayassessment.base.BaseActivity
 import com.sanhuzhen.maydayassessment.databinding.ActivityAddtaskBinding
 import com.sanhuzhen.maydayassessment.db.MyDatabaseHelper
@@ -59,7 +57,7 @@ class AddTaskActivity: BaseActivity() {
             val datePickerDialog = DatePickerDialog(
                 this,
                 DatePickerDialog.OnDateSetListener { _, selectedYear, selectedMonth, selectedDay ->
-                    // 在日期被选择后，更新界面显示并持久化生日信息
+                    // 在日期被选择后
                     val birthday = "$selectedYear-${selectedMonth + 1}-$selectedDay"
                     binding.tvTextTime.text = birthday
                 },

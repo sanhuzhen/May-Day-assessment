@@ -1,11 +1,14 @@
 package com.sanhuzhen.maydayassessment.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sanhuzhen.maydayassessment.R
@@ -25,6 +28,7 @@ class TaskRvAdapter: ListAdapter<Task,TaskRvAdapter.TheViewHolder>(object:
         return oldItem.name == newItem.name&&oldItem.time == newItem.time&&oldItem.status == newItem.status&&oldItem.image == newItem.image
     }
 }) {
+    @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: TheViewHolder, position: Int){
         val task = getItem(position)
         holder.apply {
@@ -43,6 +47,7 @@ class TaskRvAdapter: ListAdapter<Task,TaskRvAdapter.TheViewHolder>(object:
             }
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheViewHolder {
         return TheViewHolder(
