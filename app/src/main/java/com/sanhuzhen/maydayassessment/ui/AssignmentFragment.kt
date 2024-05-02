@@ -76,6 +76,4 @@ class AssignmentFragment: Fragment() {
             TaskAdapter.submitList(dataList)
         }
     }
-
-
 }
