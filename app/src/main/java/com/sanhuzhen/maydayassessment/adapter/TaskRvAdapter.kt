@@ -3,12 +3,14 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -50,15 +52,21 @@ class TaskRvAdapter(private val context: Context): ListAdapter<Task,TaskRvAdapte
             }
         }
     }
+    //过滤重新排序
+
     override fun onItemRemove(position: Int,itemView: View): Boolean {
-        val dataList = currentList.toMutableList()
         val task = getItem(position)
+        val dataList = currentList.toMutableList()
         return if (dataList.size > 0) {
-            dataList.removeAt(position)
-            val db = MyDatabaseHelper(itemView.context, "Task.db", 1).writableDatabase
-            db.delete("task", "name=?", arrayOf(task.name))
-            db.close()
-            submitList(dataList)
+            if (position != RecyclerView.NO_POSITION) {
+
+                dataList.removeAt(position)
+                //删除数据库中的数据
+                val db = MyDatabaseHelper(itemView.context, "Task.db", 1).writableDatabase
+                db.delete("task", "name=?", arrayOf(task.name))
+                db.close()
+                submitList(dataList)
+            }
             true
         } else {
             false
@@ -94,18 +102,28 @@ class TaskRvAdapter(private val context: Context): ListAdapter<Task,TaskRvAdapte
             }
         }
         private fun showEditOrDeleteDialog(task: Task) {
-            val options = arrayOf("修改", "删除")
+            val options = arrayOf("修改", "删除","置顶")
             AlertDialog.Builder(itemView.context)
                 .setTitle("选择操作")
                 .setItems(options) { _, which ->
                     when (which) {
                         0 -> showEditDialog(task)
                         1 -> showDeleteConfirmationDialog(task)
+                        2 -> top()
                     }
                 }
                 .show()
         }
-
+        private fun top(){
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                val dataList = currentList.toMutableList()
+                val task = getItem(position)
+                dataList.removeAt(position)
+                dataList.add(0, task)
+                submitList(dataList)
+            }
+        }
         @SuppressLint("MissingInflatedId")
         private fun showEditDialog(task: Task) {
         }

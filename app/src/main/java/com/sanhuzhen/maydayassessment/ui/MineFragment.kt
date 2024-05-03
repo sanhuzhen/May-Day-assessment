@@ -65,6 +65,9 @@ class MineFragment: Fragment() {
             intent.type = "image/*"
             startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO)
         }
+        binding.btMinePoint.setOnClickListener {
+            startActivity(Intent(this.context,PointActivity::class.java))
+        }
         binding.tvMineName.setOnClickListener {
             val dialog = AlertDialog.Builder(this.requireActivity())
             val editText = EditText(this.requireActivity())

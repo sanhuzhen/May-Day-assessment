@@ -52,6 +52,15 @@
         android:gravity="center"
         android:background="@color/green"
         android:layout_gravity="center_horizontal"/>
-
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt_mine_point"
+        android:layout_marginTop="20dp"
+        android:layout_width="380dp"
+        android:layout_height="50dp"
+        android:text="积分中心"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:background="@color/green"
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

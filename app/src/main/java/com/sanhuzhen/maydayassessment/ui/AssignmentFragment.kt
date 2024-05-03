@@ -73,10 +73,10 @@ class AssignmentFragment: Fragment() {
             val status = cursor.getString(cursor.getColumnIndex("status"))
             val description = cursor.getString(cursor.getColumnIndex("description"))
             if (status == "true"){
-                val task = Task(1,R.drawable.ic_launcher_foreground,name,description,time,true)
+                val task = Task(id,R.drawable.ic_launcher_foreground,name,description,time,true)
                 dataList.add(task)
             }else{
-                val task = Task(1,R.drawable.ic_launcher_foreground,name,description,time,false)
+                val task = Task(id,R.drawable.ic_launcher_foreground,name,description,time,false)
                 dataList.add(task)
             }
         }
