@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
  * @description:使用ItemTouchHelper实现侧滑删除
  */
 class MyItemTouchHelperCallback: ItemTouchHelper.Callback() {
-    private var mItemTouchMoveListener: ItemTouchMoveListener? = null
+    private lateinit var mItemTouchMoveListener: ItemTouchMoveListener
     //Callback判断滑动动作
     @SuppressLint("NotConstructor")
-    public fun MyItemTouchHelperCallback(itemTouchMoveListener: ItemTouchMoveListener) {
+    fun MyItemTouchHelperCallback(itemTouchMoveListener: ItemTouchMoveListener) {
         mItemTouchMoveListener = itemTouchMoveListener
     }
     override fun getMovementFlags(
@@ -25,26 +25,19 @@ class MyItemTouchHelperCallback: ItemTouchHelper.Callback() {
         val dragFlag = ItemTouchHelper.DOWN or ItemTouchHelper.UP
         return makeMovementFlags(dragFlag, swipeFlag)
     }
-    //长按拖拽
-    override fun isLongPressDragEnabled(): Boolean {
-        super.isLongPressDragEnabled()
-        return true
-    }
     override fun onMove(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-        if (viewHolder.itemViewType!=target.itemViewType){
+        if (viewHolder.itemViewType != target.itemViewType) {
             return false
         }
-        val result = mItemTouchMoveListener?.onItemMove(viewHolder.adapterPosition,target.adapterPosition)
-        return result?:false
-    }
+        return mItemTouchMoveListener.onItemMove(viewHolder.adapterPosition, target.adapterPosition)
 
-    
+    }
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        mItemTouchMoveListener?.onItemRemove(viewHolder.adapterPosition)
+        mItemTouchMoveListener.onItemRemove(viewHolder.adapterPosition, viewHolder.itemView)
     }
 
 }

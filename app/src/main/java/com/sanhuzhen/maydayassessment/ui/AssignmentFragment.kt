@@ -1,7 +1,6 @@
 package com.sanhuzhen.maydayassessment.ui
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
@@ -18,6 +17,7 @@ import com.sanhuzhen.maydayassessment.databinding.FragmentAssignmentBinding
 import com.sanhuzhen.maydayassessment.db.MyDatabaseHelper
 import com.sanhuzhen.maydayassessment.utils.MyItemTouchHelperCallback
 
+
 /**
  * @author: sanhuzhen
  * @date: 2024/05/01 17:30
@@ -25,11 +25,15 @@ import com.sanhuzhen.maydayassessment.utils.MyItemTouchHelperCallback
  */
 
 class AssignmentFragment: Fragment() {
+    private lateinit var dataList: List<Task>
     private val TaskAdapter: TaskRvAdapter by lazy {
         TaskRvAdapter()
     }
     private val binding: FragmentAssignmentBinding by lazy {
         FragmentAssignmentBinding.inflate(layoutInflater)
+    }
+    private val dbHelper: MyDatabaseHelper by lazy {
+        MyDatabaseHelper(this.requireContext(), "Task.db", 1)
     }
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,13 +48,12 @@ class AssignmentFragment: Fragment() {
         val layoutManager = LinearLayoutManager(this.activity)
         binding.rvTask.layoutManager = layoutManager
         binding.rvTask.adapter = TaskAdapter
-        val dataList = loadDataFromDatabase()
+        dataList = loadDataFromDatabase()
         TaskAdapter.submitList(dataList)
-        //调用ItemTouchHelper
-        val callback = MyItemTouchHelperCallback()
-        val itemTouchHelper = ItemTouchHelper(callback)
-        itemTouchHelper.attachToRecyclerView(binding.rvTask)
-
+//       //调用ItemTouchHelper
+//        val callback = MyItemTouchHelperCallback()
+//        val itemTouchHelper = ItemTouchHelper(callback)
+//        itemTouchHelper.attachToRecyclerView(binding.rvTask)
     }
     //初始化事件
     private fun initEvent() {
@@ -60,8 +63,7 @@ class AssignmentFragment: Fragment() {
     }
     @SuppressLint("Range", "Recycle")
     private fun loadDataFromDatabase(): List<Task> {
-        val dbHelper = this.activity?.let { MyDatabaseHelper(it,"Task.db",1) }
-        val db = dbHelper?.readableDatabase
+        val db = dbHelper.readableDatabase
         val dataList = mutableListOf<Task>()
         val cursor: Cursor? = db?.query("task",null,null,null,null,null,null)
         while (cursor!!.moveToNext()){
