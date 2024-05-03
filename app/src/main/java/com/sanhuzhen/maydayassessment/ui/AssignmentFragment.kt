@@ -9,12 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sanhuzhen.maydayassessment.R
 import com.sanhuzhen.maydayassessment.adapter.TaskRvAdapter
 import com.sanhuzhen.maydayassessment.bean.Task
 import com.sanhuzhen.maydayassessment.databinding.FragmentAssignmentBinding
 import com.sanhuzhen.maydayassessment.db.MyDatabaseHelper
+import com.sanhuzhen.maydayassessment.utils.MyItemTouchHelperCallback
 
 /**
  * @author: sanhuzhen
@@ -44,6 +46,11 @@ class AssignmentFragment: Fragment() {
         binding.rvTask.adapter = TaskAdapter
         val dataList = loadDataFromDatabase()
         TaskAdapter.submitList(dataList)
+        //调用ItemTouchHelper
+        val callback = MyItemTouchHelperCallback()
+        val itemTouchHelper = ItemTouchHelper(callback)
+        itemTouchHelper.attachToRecyclerView(binding.rvTask)
+
     }
     //初始化事件
     private fun initEvent() {
