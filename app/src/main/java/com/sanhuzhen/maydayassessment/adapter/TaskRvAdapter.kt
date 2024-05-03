@@ -1,7 +1,8 @@
 package com.sanhuzhen.maydayassessment.adapter
-
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,24 +24,31 @@ import java.util.Collections
  * @data 2024/05/01 19:19
  * @description:rv的adapter
  */
-class TaskRvAdapter: ListAdapter<Task,TaskRvAdapter.TheViewHolder>(object:
+class TaskRvAdapter(private val context: Context): ListAdapter<Task,TaskRvAdapter.TheViewHolder>(object:
     DiffUtil.ItemCallback<Task>(){
     override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id
     }
     override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
         return oldItem.name == newItem.name&&oldItem.time == newItem.time&&oldItem.status == newItem.status&&oldItem.image == newItem.image
     }
 }), ItemTouchMoveListener{
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: TheViewHolder, position: Int) {
         val task = getItem(position)
+
         holder.apply {
             taskName.text = task.name
             taskTime.text = task.time
+            val sharedPreferences: SharedPreferences = context.getSharedPreferences(task.name, Context.MODE_PRIVATE)
+            taskBox.isChecked = sharedPreferences.getBoolean(task.id.toString(), false)
             image.setImageResource(task.image)
+            // 添加保存 CheckBox 状态到 SharedPreferences 的逻辑
+            taskBox.setOnCheckedChangeListener { _, isChecked ->
+                sharedPreferences.edit().putBoolean(task.id.toString(), isChecked).apply()
+            }
         }
-
     }
     override fun onItemRemove(position: Int,itemView: View): Boolean {
         val dataList = currentList.toMutableList()
@@ -100,30 +108,6 @@ class TaskRvAdapter: ListAdapter<Task,TaskRvAdapter.TheViewHolder>(object:
 
         @SuppressLint("MissingInflatedId")
         private fun showEditDialog(task: Task) {
-//            // 创建修改对话框并处理修改逻辑
-//            val dialogView = LayoutInflater.from(itemView.context).inflate(R.layout.edit_dialog, null)
-//            val editTextName = dialogView.findViewById<EditText>(R.id.et_textName)
-//            val editTextTime = dialogView.findViewById<EditText>(R.id.editTextTime)
-//
-//            editTextName.setText(task.name)
-//            editTextTime.setText(task.time)
-//
-//            AlertDialog.Builder(itemView.context)
-//                .setTitle("修改任务")
-//                .setView(dialogView)
-//                .setPositiveButton("确定") { _, _ ->
-//                    val newName = editTextName.text.toString()
-//                    val newTime = editTextTime.text.toString()
-//                    if (newName.isNotEmpty() && newTime.isNotEmpty()) {
-//                        // 更新数据到数据库
-////                        updateTaskInDatabase(task, newName, newTime)
-//                    } else {
-//                        // 提示用户输入有效的名称和时间
-//                        Toast.makeText(itemView.context, "名称和时间不能为空", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//                .setNegativeButton("取消", null)
-//                .show()
         }
         private fun showDeleteConfirmationDialog(task: Task) {
             AlertDialog.Builder(itemView.context)

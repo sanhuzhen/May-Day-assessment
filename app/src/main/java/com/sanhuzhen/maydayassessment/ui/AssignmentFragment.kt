@@ -27,7 +27,7 @@ import com.sanhuzhen.maydayassessment.utils.MyItemTouchHelperCallback
 class AssignmentFragment: Fragment() {
     private lateinit var dataList: List<Task>
     private val TaskAdapter: TaskRvAdapter by lazy {
-        TaskRvAdapter()
+        TaskRvAdapter(this.requireContext())
     }
     private val binding: FragmentAssignmentBinding by lazy {
         FragmentAssignmentBinding.inflate(layoutInflater)
@@ -72,8 +72,13 @@ class AssignmentFragment: Fragment() {
             val time = cursor.getString(cursor.getColumnIndex("time"))
             val status = cursor.getString(cursor.getColumnIndex("status"))
             val description = cursor.getString(cursor.getColumnIndex("description"))
-            val task = Task(R.drawable.ic_launcher_foreground,name,description,time,status)
-            dataList.add(task)
+            if (status == "true"){
+                val task = Task(1,R.drawable.ic_launcher_foreground,name,description,time,true)
+                dataList.add(task)
+            }else{
+                val task = Task(1,R.drawable.ic_launcher_foreground,name,description,time,false)
+                dataList.add(task)
+            }
         }
         return dataList
     }

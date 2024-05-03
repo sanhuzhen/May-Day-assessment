@@ -28,7 +28,7 @@ class AddTaskActivity: BaseActivity() {
         binding.btnAdd.setOnClickListener {
             val name = binding.etTextName.text.toString()
             val time = binding.tvTextTime.text.toString()
-            val status = "否".toString()
+            val status: Boolean = false
             val description = binding.etRemark.text.toString()
             if (name.isEmpty()||time.isEmpty()||description.isEmpty()){
                 toast(this,"请输入完整信息！！！")
