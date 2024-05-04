@@ -36,7 +36,7 @@ class TaskRvAdapter(private val context: Context): ListAdapter<Task,TaskRvAdapte
     }
 }), ItemTouchMoveListener{
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "ResourceAsColor")
     override fun onBindViewHolder(holder: TheViewHolder, position: Int) {
         val task = getItem(position)
 
@@ -49,7 +49,12 @@ class TaskRvAdapter(private val context: Context): ListAdapter<Task,TaskRvAdapte
             // 添加保存 CheckBox 状态到 SharedPreferences 的逻辑
             taskBox.setOnCheckedChangeListener { _, isChecked ->
                 sharedPreferences.edit().putBoolean(task.id.toString(), isChecked).apply()
+                if (taskBox.isChecked){
+                    itemView.setBackgroundColor(R.color.huisde)
+                    submitList(currentList)
+                }
             }
+
         }
     }
     //过滤重新排序

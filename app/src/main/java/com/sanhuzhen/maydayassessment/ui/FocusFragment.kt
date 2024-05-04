@@ -1,15 +1,18 @@
 package com.sanhuzhen.maydayassessment.ui
 
 import android.app.AlertDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import com.sanhuzhen.maydayassessment.databinding.FragmentFocusBinding
+import java.util.Calendar
+
 
 class FocusFragment: Fragment() {
     private lateinit var countDownTimer: CountDownTimer
@@ -17,6 +20,7 @@ class FocusFragment: Fragment() {
     private val binding: FragmentFocusBinding by lazy {
         FragmentFocusBinding.inflate(layoutInflater)
     }
+    private var totalTimeInMillis: Long = 0L
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,7 +32,6 @@ class FocusFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 初始化倒计时
-        val totalTimeInMillis: Long = 100 // 倒计时总时长，这里是 60 秒
         val intervalInMillis: Long = 1000 // 倒计时间隔，这里是每秒钟更新一次
         window = requireActivity().window
         countDownTimer = object : CountDownTimer(totalTimeInMillis, intervalInMillis) {
@@ -43,6 +46,9 @@ class FocusFragment: Fragment() {
                 // 在倒计时结束后，重新启用屏幕触
                 window?.clearFlags(android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             }
+        }
+        binding.countdownTextView.setOnClickListener {
+            showTimePickerDialog()
         }
 
         // 开始按钮点击事件
@@ -75,4 +81,20 @@ class FocusFragment: Fragment() {
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
     }
+    private fun showTimePickerDialog() {
+        // 创建并显示时间选择对话框
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+        val timePickerDialog = TimePickerDialog(this.requireContext(),
+            TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
+                // 处理选择的时间
+                val selectedTime = "$selectedHour:$selectedMinute"
+                binding.countdownTextView.text = "倒计时：$selectedTime"
+                totalTimeInMillis = (selectedHour * 60 + selectedMinute) * 60 * 1000L
+            }, hour, minute, true)
+        timePickerDialog.show()
+
+    }
 }
+
