@@ -34,6 +34,7 @@ class PointRvAdapter(val awardList: List<award>):
             }else{
                 toast(holder.itemView.context, "积分不足")
             }
+
         }
     }
     inner class TheViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

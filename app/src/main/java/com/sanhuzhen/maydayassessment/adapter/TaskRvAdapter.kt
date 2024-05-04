@@ -64,7 +64,6 @@ class TaskRvAdapter(private val context: Context): ListAdapter<Task,TaskRvAdapte
         val dataList = currentList.toMutableList()
         return if (dataList.size > 0) {
             if (position != RecyclerView.NO_POSITION) {
-
                 dataList.removeAt(position)
                 //删除数据库中的数据
                 val db = MyDatabaseHelper(itemView.context, "Task.db", 1).writableDatabase
@@ -82,9 +81,6 @@ class TaskRvAdapter(private val context: Context): ListAdapter<Task,TaskRvAdapte
         notifyItemMoved(fromPosition, toPosition)
         return true
     }
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TheViewHolder {
         return TheViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.task, parent, false)
