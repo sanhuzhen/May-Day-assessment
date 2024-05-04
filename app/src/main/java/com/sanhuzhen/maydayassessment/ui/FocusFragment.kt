@@ -8,93 +8,94 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.sanhuzhen.maydayassessment.databinding.FragmentFocusBinding
 import java.util.Calendar
 
+/**
+ * @author sanhuzhen
+ * @date 2024/5/4 13:01
+ * @description: 专注
+ */
 
-class FocusFragment: Fragment() {
+class FocusFragment : Fragment() {
     private lateinit var countDownTimer: CountDownTimer
     private var window: Window? = null
+    private var totalTimeInMillis: Long = 0L
+    private val intervalInMillis: Long = 1000 // 倒计时间隔，这里是每秒钟更新一次
     private val binding: FragmentFocusBinding by lazy {
         FragmentFocusBinding.inflate(layoutInflater)
     }
-    private var totalTimeInMillis: Long = 0L
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // 初始化倒计时
-        val intervalInMillis: Long = 1000 // 倒计时间隔，这里是每秒钟更新一次
-        window = requireActivity().window
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupListeners()
+    }
+
+    private fun setupListeners() {
+        binding.countdownTextView.setOnClickListener {
+            showTimePickerDialog()
+        }
+
+        binding.startButton.setOnClickListener {
+            showConfirmationDialog()
+        }
+    }
+
+    private fun startCountdown() {
         countDownTimer = object : CountDownTimer(totalTimeInMillis, intervalInMillis) {
             override fun onTick(millisUntilFinished: Long) {
-                val secondsLeft = millisUntilFinished / 1000
-                binding.countdownTextView.text = "倒计时：$secondsLeft 秒"
+                val selectedHour = millisUntilFinished / 1000 / 60 /60
+                val selectedMinute = (millisUntilFinished - (selectedHour * 60 * 60 * 1000)) / 1000 / 60
+                val secondsLeft = (millisUntilFinished - (selectedHour * 60 * 60 * 1000)- (selectedMinute * 60 * 1000)) / 1000
+                binding.countdownTextView.text = "倒计时：$selectedHour:$selectedMinute:$secondsLeft"
             }
 
             override fun onFinish() {
                 binding.countdownTextView.text = "倒计时结束"
                 showAlertDialog()
-                // 在倒计时结束后，重新启用屏幕触
                 window?.clearFlags(android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             }
         }
-        binding.countdownTextView.setOnClickListener {
-            showTimePickerDialog()
-        }
-
-        // 开始按钮点击事件
-        binding.startButton.setOnClickListener {
-            AlertDialog.Builder(this.requireContext())
-                .setTitle("确认要开启吗")
-                .setMessage("开启后屏幕动不了哟")
-                .setPositiveButton("确定") { _, _ ->
-                    // 在开始倒计时前，禁用屏幕触摸
-                    window?.addFlags(android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                    // 启动倒计时
-                    countDownTimer.start()
-                }
-                .setNegativeButton("取消", null)
-                .show()
-
-        }
-
-
-
+        countDownTimer.start()
     }
+
+    private fun showConfirmationDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("确认要开启吗")
+            .setMessage("开启后屏幕动不了哟")
+            .setPositiveButton("确定") { _, _ ->
+                window?.addFlags(android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                startCountdown()
+            }
+            .setNegativeButton("取消", null)
+            .show()
+    }
+
     private fun showAlertDialog() {
-        val alertDialogBuilder = AlertDialog.Builder(this.requireContext())
-        alertDialogBuilder.setTitle("恭喜你完成了！")
-        alertDialogBuilder.setMessage("你获得了10个积分！")
-        alertDialogBuilder.setPositiveButton("确定") { dialog, which ->
-            // 确定按钮点击事件，可以执行相应的操作
-            dialog.dismiss() // 关闭对话框
-        }
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
+        AlertDialog.Builder(requireContext())
+            .setTitle("恭喜你完成了！")
+            .setMessage("你获得了10个积分！")
+            .setPositiveButton("确定") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
+
     private fun showTimePickerDialog() {
-        // 创建并显示时间选择对话框
         val calendar = Calendar.getInstance()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
         val minute = calendar.get(Calendar.MINUTE)
-        val timePickerDialog = TimePickerDialog(this.requireContext(),
-            TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
-                // 处理选择的时间
-                val selectedTime = "$selectedHour:$selectedMinute"
-                binding.countdownTextView.text = "倒计时：$selectedTime"
-                totalTimeInMillis = (selectedHour * 60 + selectedMinute) * 60 * 1000L
-            }, hour, minute, true)
+        val timePickerDialog = TimePickerDialog(requireContext(), TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
+            binding.countdownTextView.text = "倒计时：$selectedHour:$selectedMinute"
+            totalTimeInMillis = (selectedHour * 60 + selectedMinute) * 60 * 1000L
+        }, hour, minute, true)
         timePickerDialog.show()
-
     }
 }
+
 

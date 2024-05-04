@@ -43,7 +43,7 @@ class TaskRvAdapter(private val context: Context): ListAdapter<Task,TaskRvAdapte
         holder.apply {
             taskName.text = task.name
             taskTime.text = task.time
-            val sharedPreferences: SharedPreferences = context.getSharedPreferences(task.name, Context.MODE_PRIVATE)
+            val sharedPreferences: SharedPreferences = context.getSharedPreferences(task.id.toString(), Context.MODE_PRIVATE)
             taskBox.isChecked = sharedPreferences.getBoolean(task.id.toString(), false)
             image.setImageResource(task.image)
             // 添加保存 CheckBox 状态到 SharedPreferences 的逻辑
