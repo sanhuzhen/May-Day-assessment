@@ -33,6 +33,7 @@ class FocusFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        window = requireActivity().window
         setupListeners()
     }
 
@@ -61,6 +62,7 @@ class FocusFragment : Fragment() {
                 window?.clearFlags(android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             }
         }
+        window?.addFlags(android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         countDownTimer.start()
     }
 
@@ -69,7 +71,7 @@ class FocusFragment : Fragment() {
             .setTitle("确认要开启吗")
             .setMessage("开启后屏幕动不了哟")
             .setPositiveButton("确定") { _, _ ->
-                window?.addFlags(android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
                 startCountdown()
             }
             .setNegativeButton("取消", null)
