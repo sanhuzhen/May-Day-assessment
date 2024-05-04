@@ -2,6 +2,8 @@ package com.sanhuzhen.maydayassessment.ui
 
 import android.app.AlertDialog
 import android.app.TimePickerDialog
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
@@ -20,6 +22,7 @@ import java.util.Calendar
 
 class FocusFragment : Fragment() {
     private lateinit var countDownTimer: CountDownTimer
+
     private var window: Window? = null
     private var totalTimeInMillis: Long = 0L
     private val intervalInMillis: Long = 1000 // 倒计时间隔，这里是每秒钟更新一次
@@ -34,6 +37,7 @@ class FocusFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         window = requireActivity().window
+
         setupListeners()
     }
 
@@ -58,6 +62,10 @@ class FocusFragment : Fragment() {
 
             override fun onFinish() {
                 binding.countdownTextView.text = "倒计时结束"
+                val sanSharedPreferences: SharedPreferences = requireContext().getSharedPreferences("point", Context.MODE_PRIVATE)
+                val editor = sanSharedPreferences.edit()
+                editor.putInt("point", sanSharedPreferences.getInt("point", 0) + 10)
+                editor.apply()
                 showAlertDialog()
                 window?.clearFlags(android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             }
@@ -83,6 +91,7 @@ class FocusFragment : Fragment() {
             .setTitle("恭喜你完成了！")
             .setMessage("你获得了10个积分！")
             .setPositiveButton("确定") { dialog, _ ->
+
                 dialog.dismiss()
             }
             .show()

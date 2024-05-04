@@ -1,6 +1,7 @@
 package com.sanhuzhen.maydayassessment.utils
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
@@ -13,7 +14,7 @@ class MyItemTouchHelperCallback: ItemTouchHelper.Callback() {
     private lateinit var mItemTouchMoveListener: ItemTouchMoveListener
     //Callback判断滑动动作
     @SuppressLint("NotConstructor")
-    fun MyItemTouchHelperCallback(itemTouchMoveListener: ItemTouchMoveListener) {
+    public fun MyItemTouchHelperCallback(itemTouchMoveListener: ItemTouchMoveListener) {
         mItemTouchMoveListener = itemTouchMoveListener
     }
     override fun getMovementFlags(

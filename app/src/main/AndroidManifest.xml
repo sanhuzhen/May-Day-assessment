@@ -38,7 +38,8 @@
         <activity android:name=".ui.AddTaskActivity">
 
         </activity>
-        <activity android:name=".ui.PointActivity">
+        <activity android:name=".ui.PointActivity"
+            android:launchMode="singleTop">
 
         </activity>
     </application>
