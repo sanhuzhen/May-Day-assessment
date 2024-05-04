@@ -1,23 +1,32 @@
 package com.sanhuzhen.maydayassessment.adapter
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.content.ContentValues
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.Color
+import android.graphics.Point
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.Button
 import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.sanhuzhen.maydayassessment.R
 import com.sanhuzhen.maydayassessment.bean.Task
 import com.sanhuzhen.maydayassessment.db.MyDatabaseHelper
 import com.sanhuzhen.maydayassessment.utils.ItemTouchMoveListener
+import com.sanhuzhen.maydayassessment.utils.selectCalendar
+import java.util.Calendar
 import java.util.Collections
 
 
@@ -115,6 +124,46 @@ class TaskRvAdapter(private val context: Context): ListAdapter<Task,TaskRvAdapte
                 }
                 .show()
         }
+        @SuppressLint("MissingInflatedId", "InflateParams")
+        private fun showEditDialog(task: Task) {
+            val bottomSheetDialog = BottomSheetDialog(itemView.context)
+            val view = LayoutInflater.from(itemView.context).inflate(R.layout.edit_task_dialog, null)
+            val taskNameEditText = view.findViewById<EditText>(R.id.et2_textName)
+            val taskTimeEditText = view.findViewById<TextView>(R.id.tv2_textTime)
+            val taskRemark = view.findViewById<EditText>(R.id.et2_remark)
+            taskNameEditText.setText(task.name)
+            taskTimeEditText.text = task.time
+            taskRemark.setText(task.description)
+            bottomSheetDialog.setContentView(view)
+            bottomSheetDialog.setCanceledOnTouchOutside(true)
+            taskTimeEditText.setOnClickListener {
+                selectCalendar(itemView.context, taskTimeEditText)
+            }
+            view.findViewById<Button>(R.id.btn_update).setOnClickListener {
+                itemView.post {
+                    updateTask(task, taskNameEditText, taskTimeEditText, taskRemark)
+                }
+                bottomSheetDialog.dismiss()
+            }
+
+            bottomSheetDialog.show()
+        }
+        private fun updateTask(task: Task, taskNameEditText: EditText, taskTimeEditText: TextView, taskRemark: EditText) {
+            val db = MyDatabaseHelper(itemView.context, "Task.db", 1).writableDatabase
+
+            val values = ContentValues().apply {
+                put("taskName", taskNameEditText.text.toString())
+                put("taskTime", taskTimeEditText.text.toString())
+                put("taskRemark", taskRemark.text.toString())
+            }
+
+            val selection = "taskId = ?"
+            val selectionArgs = arrayOf(task.id.toString())
+            db.update("TaskTable", values, selection, selectionArgs)
+
+            db.close()
+        }
+
         private fun top(){
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
@@ -125,9 +174,7 @@ class TaskRvAdapter(private val context: Context): ListAdapter<Task,TaskRvAdapte
                 submitList(dataList)
             }
         }
-        @SuppressLint("MissingInflatedId")
-        private fun showEditDialog(task: Task) {
-        }
+
         private fun showDeleteConfirmationDialog(task: Task) {
             AlertDialog.Builder(itemView.context)
                 .setTitle("确认删除")

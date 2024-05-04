@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/img"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="25dp"
+        android:text="任务名称: " />
+
+
+    <EditText
+        android:id="@+id/et2_textName"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/edit_type"
+        android:padding="5dp"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85sp"
+        android:layout_marginTop="2dp"
+        android:gravity="center_vertical"
+        android:text="任务截至时间: " />
+    <TextView
+        android:id="@+id/tv2_textTime"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/edit_type"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:text="请选择"
+        android:textSize="20sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="2dp"
+        android:text="备注: " />
+
+    <EditText
+        android:id="@+id/et2_remark"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/edit_type"
+        android:padding="5dp"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_update"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/bt_type"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="修改"
+        android:textSize="20sp"/>
+
+</LinearLayout>

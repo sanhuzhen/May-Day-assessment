@@ -1,14 +1,13 @@
 package com.sanhuzhen.maydayassessment.ui
 
-import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import com.sanhuzhen.maydayassessment.base.BaseActivity
 import com.sanhuzhen.maydayassessment.databinding.ActivityAddtaskBinding
 import com.sanhuzhen.maydayassessment.db.MyDatabaseHelper
+import com.sanhuzhen.maydayassessment.utils.selectCalendar
 import com.sanhuzhen.maydayassessment.utils.toast
-import java.util.Calendar
 
 /**
  * @author sanhuzhen
@@ -28,7 +27,7 @@ class AddTaskActivity: BaseActivity() {
         binding.btnAdd.setOnClickListener {
             val name = binding.etTextName.text.toString()
             val time = binding.tvTextTime.text.toString()
-            val status: Boolean = false
+            val status  = false
             val description = binding.etRemark.text.toString()
             if (name.isEmpty()||time.isEmpty()||description.isEmpty()){
                 toast(this,"请输入完整信息！！！")
@@ -40,7 +39,7 @@ class AddTaskActivity: BaseActivity() {
                     put("description",description)
                 }
                 toast(this,"添加成功！！！")
-                db.insert("task",null,values)
+                db.insert("Task",null,values)
                 Log.d("you","----------- 添加成功 -----------")
                 finish()
             }
@@ -49,21 +48,7 @@ class AddTaskActivity: BaseActivity() {
             finish()
         }
         binding.tvTextTime.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
-            //引入官方日历
-            val datePickerDialog = DatePickerDialog(
-                this,
-                DatePickerDialog.OnDateSetListener { _, selectedYear, selectedMonth, selectedDay ->
-                    // 在日期被选择后
-                    val birthday = "$selectedYear-${selectedMonth + 1}-$selectedDay"
-                    binding.tvTextTime.text = birthday
-                },
-                year, month, day
-            )
-            datePickerDialog.show()
+            selectCalendar(this,binding.tvTextTime)
         }
     }
 }
