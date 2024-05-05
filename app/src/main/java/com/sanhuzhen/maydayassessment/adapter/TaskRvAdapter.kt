@@ -26,6 +26,7 @@ import com.sanhuzhen.maydayassessment.bean.Task
 import com.sanhuzhen.maydayassessment.db.MyDatabaseHelper
 import com.sanhuzhen.maydayassessment.utils.ItemTouchMoveListener
 import com.sanhuzhen.maydayassessment.utils.selectCalendar
+import com.sanhuzhen.maydayassessment.utils.toast
 import java.util.Calendar
 import java.util.Collections
 
@@ -140,9 +141,10 @@ class TaskRvAdapter(private val context: Context): ListAdapter<Task,TaskRvAdapte
                 selectCalendar(itemView.context, taskTimeEditText)
             }
             view.findViewById<Button>(R.id.btn_update).setOnClickListener {
-                itemView.post {
-                    updateTask(task, taskNameEditText, taskTimeEditText, taskRemark)
-                }
+//                itemView.post {
+//                    updateTask(task, taskNameEditText, taskTimeEditText, taskRemark)
+//                }
+                toast(itemView.context,"功能未开放")
                 bottomSheetDialog.dismiss()
             }
 
@@ -159,7 +161,7 @@ class TaskRvAdapter(private val context: Context): ListAdapter<Task,TaskRvAdapte
 
             val selection = "taskId = ?"
             val selectionArgs = arrayOf(task.id.toString())
-            db.update("TaskTable", values, selection, selectionArgs)
+            db.update("task", values, selection, selectionArgs)
 
             db.close()
         }
