@@ -21,7 +21,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         aadFragment()
-        binding.viewPager2.adapter = ViewPageAdapter(this,fragmentList)
+        binding.viewPager2.adapter = ViewPageAdapter(this)
         binding.viewPager2.registerOnPageChangeCallback(object :
             androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
