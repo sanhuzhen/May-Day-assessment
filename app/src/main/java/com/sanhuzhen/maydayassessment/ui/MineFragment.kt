@@ -45,9 +45,9 @@ class MineFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mSharedPreferences = this.requireActivity().getPreferences(Context.MODE_PRIVATE)
+
         initEvent()
         Persistence()
-
     }
     //初始化事件
     private fun initEvent() {
@@ -108,13 +108,13 @@ class MineFragment: Fragment() {
     //持久化
     private fun Persistence() {
         // 持久化头像
-        val headUri = mSharedPreferences.getString("head", null)
-        if (headUri != null) {
-            val bitmap = getBitmapFromUri(Uri.parse(headUri))
-            if (bitmap != null) {
-                binding.ivMineHead.setImageBitmap(bitmap)
-            }
-        }
+//        val headUri = mSharedPreferences.getString("head", null)
+//        if (headUri != null) {
+//            val bitmap = getBitmapFromUri(Uri.parse(headUri))
+//            if (bitmap != null) {
+//                binding.ivMineHead.setImageBitmap(bitmap)
+//            }
+//        }
         // 持久化姓名
         // 持久化姓名
         val name = mSharedPreferences.getString("name", null)
@@ -122,4 +122,6 @@ class MineFragment: Fragment() {
             binding.tvMineName.text = name
         }
     }
+
+
 }
